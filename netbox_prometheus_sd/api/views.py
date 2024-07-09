@@ -66,6 +66,7 @@ class VirtualMachineViewSet(
         "tags",
         "services",
         "contacts",
+        "status",
 
     )
     filterset_class = VirtualMachineFilterSet
@@ -86,6 +87,7 @@ class DeviceViewSet(NetboxPrometheusSDModelViewSet):  # pylint: disable=too-many
         "virtual_chassis__master",
         "primary_ip4__nat_outside",
         "primary_ip6__nat_outside",
+        "status",
         "tags",
     )
     filterset_class = DeviceFilterSet
