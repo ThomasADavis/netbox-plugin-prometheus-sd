@@ -58,11 +58,18 @@ def extract_cluster(obj, labels: LabelDict):
             labels["cluster_group"] = obj.cluster.group.name
         if obj.cluster.type:
             labels["cluster_type"] = obj.cluster.type.name
-        if obj.cluster.site:
-            labels["site"] = obj.cluster.site.name
-            labels["site_slug"] = obj.cluster.site.slug
-
+        if obj.cluster.scope:
+            labels["scope"] = obj.cluster.scope.name
+            labels["scope_slug"] = obj.cluster.scope.slug
+#        if obj.cluster.site:
+#            labels["site"] = obj.cluster.site.name
+#            labels["site_slug"] = obj.cluster.site.slug
+#
     # Has precedence over cluster site
+    if hasattr(obj, "scope") and obj.scope is not None:
+        labels["scope"] = obj.scope.name
+        labels["scope_slug"] = obj.scope.slug
+
     if hasattr(obj, "site") and obj.site is not None:
         labels["site"] = obj.site.name
         labels["site_slug"] = obj.site.slug
@@ -145,6 +152,7 @@ def extract_prometheus_sd_config(obj, labels):
 
 def extract_parent(obj, labels: LabelDict):
     labels["parent"] = obj.parent.name
+    labels["status"] = obj.parent.status
     extract_primary_ip(obj.parent, labels)
     extract_oob_ip(obj.parent, labels)
     extract_tenant(obj.parent, labels)
